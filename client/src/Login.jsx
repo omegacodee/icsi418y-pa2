@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function Login({ onSwitchToSignup }) {
+function Login({ onSwitchToSignup, onLoginSuccess }) {
   const [formData, setFormData] = useState({ username: '', password: '' })
   const [status, setStatus] = useState(null) // { type: 'success' | 'error', message: string }
   const [submitting, setSubmitting] = useState(false)
@@ -31,6 +31,7 @@ function Login({ onSwitchToSignup }) {
 
       if (res.ok && data.success) {
         setStatus({ type: 'success', message: data.message })
+        onLoginSuccess?.(data.user)
       } else {
         setStatus({ type: 'error', message: data.message || 'Login failed.' })
       }
